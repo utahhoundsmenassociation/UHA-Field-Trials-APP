@@ -1,0 +1,22 @@
+{
+  "name": "UHA Field Trial Manager",
+  "short_name": "UHA Trials",
+  "description": "Utah Houndsmen Association Field Trial Manager",
+  "start_url": "/uha_field_trials_v6_8.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f0f2f5",
+  "theme_color": "#b45309",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
