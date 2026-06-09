@@ -1,4 +1,4 @@
-const CACHE_NAME = 'uha-trials-v7_1';
+const CACHE_NAME = 'uha-trials-v7_3';
 const FILES_TO_CACHE = [
   './index.html',
   './manifest.json',
