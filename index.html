@@ -3642,9 +3642,9 @@ function buildDisplayWindow(){
     const st=getDispStatus(ev,hi);
     const chips=h.dogs.map(did=>{
       const d=gd(did);const c=getCollar(ev,hi,did);
-      const dot=c.name!=='None'?`<span style="width:16px;height:16px;border-radius:50%;background:${c.bg};border:2px solid ${c.border};display:inline-block;flex-shrink:0;"></span>`:'';
-      const collarTag=c.name!=='None'?`<span style="font-size:13px;font-weight:700;padding:2px 7px;border-radius:8px;background:${c.bg};color:${c.text};border:1px solid ${c.border};margin-left:2px;">${c.name}</span>`:'';
-      return`<span style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #d1d5db;border-radius:8px;padding:6px 14px;font-size:18px;font-weight:600;color:#1a1d27;">${dot}${d.dog}${collarTag}<span style="font-weight:400;font-size:14px;color:#4b5563;">${d.handler}</span></span>`;
+      const dot=c.name!=='None'?`<span style="width:26px;height:26px;border-radius:50%;background:${c.bg};border:3px solid ${c.border};display:inline-block;flex-shrink:0;"></span>`:'';
+      const collarTag=c.name!=='None'?`<span style="font-size:20px;font-weight:700;padding:4px 12px;border-radius:10px;background:${c.bg};color:${c.text};border:2px solid ${c.border};margin-left:4px;">${c.name}</span>`:'';
+      return`<span style="display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid #d1d5db;border-radius:12px;padding:12px 22px;font-size:30px;font-weight:700;color:#1a1d27;">${dot}${d.dog}${collarTag}<span style="font-weight:500;font-size:22px;color:#4b5563;">${d.handler}</span></span>`;
     }).join('');
     if(st==='running')running.push({label:`${evLabel(ev)} — ${h.label}`,chips});
     else if(st==='next')next.push({label:`${evLabel(ev)} — ${h.label}`,chips});
@@ -3657,8 +3657,8 @@ function buildDisplayWindow(){
     const src=k==='__irondog'?S.dogs.filter(d=>d.ironDog&&d.dog):S.dogs.filter(d=>d.bearDrag&&d.dog);
     const chips=src.map(d=>{
       const c=getSpCollar(k==='__irondog'?'ironDog':'bearDrag',d.id);
-      const dot=c.name!=='None'?`<span style="width:16px;height:16px;border-radius:50%;background:${c.bg};border:2px solid ${c.border};display:inline-block;flex-shrink:0;"></span>`:'';
-      return`<span style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #d1d5db;border-radius:8px;padding:6px 14px;font-size:18px;font-weight:600;color:#1a1d27;">${dot}${d.dog}<span style="font-weight:400;font-size:14px;color:#4b5563;">${d.handler}</span></span>`;
+      const dot=c.name!=='None'?`<span style="width:26px;height:26px;border-radius:50%;background:${c.bg};border:3px solid ${c.border};display:inline-block;flex-shrink:0;"></span>`:'';
+      return`<span style="display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid #d1d5db;border-radius:12px;padding:12px 22px;font-size:30px;font-weight:700;color:#1a1d27;">${dot}${d.dog}<span style="font-weight:500;font-size:22px;color:#4b5563;">${d.handler}</span></span>`;
     }).join('');
     const item={label:lbl,chips};
     if(st==='running')running.push(item);else if(st==='next')next.push(item);else if(st==='hole')hole.push(item);
@@ -3667,7 +3667,7 @@ function buildDisplayWindow(){
   // Bear Pack teams
   (S.pack||[]).forEach(t=>{
     const st=getDispStatus('__bearpack',t.num);if(!st)return;
-    const chips=(t.dogs||[]).filter(d=>d.dog).map(d=>`<span style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #d1d5db;border-radius:8px;padding:6px 14px;font-size:18px;font-weight:600;color:#1a1d27;">${d.dog}${d.handler?`<span style="font-weight:400;font-size:14px;color:#4b5563;">${d.handler}</span>`:''}</span>`).join('');
+    const chips=(t.dogs||[]).filter(d=>d.dog).map(d=>`<span style="display:inline-flex;align-items:center;gap:10px;background:#fff;border:2px solid #d1d5db;border-radius:12px;padding:12px 22px;font-size:30px;font-weight:700;color:#1a1d27;">${d.dog}${d.handler?`<span style="font-weight:500;font-size:22px;color:#4b5563;">${d.handler}</span>`:''}</span>`).join('');
     const label=`Bear Pack — ${t.name||t.handler}${t.win?' 🥇':''}${t.time&&t.time!=='No Time'?' ('+t.time+')':''}`;
     const item={label,chips};
     if(st==='running')running.push(item);else if(st==='next')next.push(item);else if(st==='hole')hole.push(item);
@@ -3675,15 +3675,15 @@ function buildDisplayWindow(){
 
   const section=(title,pos,grad,border,textCol,items)=>!items.length?'':
     `<div style="background:#fff;border:2px solid ${border};border-radius:18px;margin-bottom:22px;overflow:hidden;box-shadow:0 6px 22px rgba(31,45,61,.1);">
-      <div style="background:${grad};color:#fff;padding:14px 26px;display:flex;align-items:center;gap:14px;font-family:'Barlow Semi Condensed',sans-serif;font-size:28px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;">
-        <span style="width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 0 0 5px rgba(255,255,255,.28);"></span>${title}
-        <span style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:600;letter-spacing:1.5px;opacity:.9;background:rgba(255,255,255,.18);padding:4px 14px;border-radius:22px;">${pos}</span>
+      <div style="background:${grad};color:#fff;padding:18px 30px;display:flex;align-items:center;gap:14px;font-family:'Barlow Semi Condensed',sans-serif;font-size:38px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;">
+        <span style="width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 0 0 5px rgba(255,255,255,.28);"></span>${title}
+        <span style="margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:600;letter-spacing:1.5px;opacity:.9;background:rgba(255,255,255,.18);padding:5px 18px;border-radius:22px;">${pos}</span>
       </div>
-      <div style="padding:22px 26px;">
+      <div style="padding:26px 30px;">
       ${items.map(x=>`
-        <div style="margin-bottom:18px;">
-          <div style="font-family:'Barlow Semi Condensed',sans-serif;font-size:30px;font-weight:700;color:#1F2D3D;margin-bottom:11px;letter-spacing:.2px;">${x.label}</div>
-          <div style="display:flex;flex-wrap:wrap;gap:9px;">${x.chips||''}</div>
+        <div style="margin-bottom:22px;">
+          <div style="font-family:'Barlow Semi Condensed',sans-serif;font-size:40px;font-weight:700;color:#1F2D3D;margin-bottom:14px;letter-spacing:.2px;">${x.label}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:12px;">${x.chips||''}</div>
         </div>`).join('')}
       </div>
     </div>`;
@@ -3700,10 +3700,10 @@ function buildDisplayWindow(){
     @media print{body{background:#fff;}}
   </style>
   </head><body>
-  <div style="display:flex;align-items:center;gap:18px;margin-bottom:26px;background:linear-gradient(180deg,#1F2D3D,#2A3A4D);border-bottom:4px solid #B86128;padding:18px 28px;border-radius:14px;box-shadow:0 4px 18px rgba(31,45,61,.25);">
-    <div style="font-family:'Barlow Semi Condensed',sans-serif;font-size:40px;font-weight:700;color:#fff;letter-spacing:.5px;text-transform:uppercase;line-height:1;">UHA Field Trials</div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:600;color:#E0986A;letter-spacing:2px;text-transform:uppercase;">Live Status Board</div>
-    <div style="margin-left:auto;font-size:15px;color:#b8c2cd;">Updated ${new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})}</div>
+  <div style="display:flex;align-items:center;gap:18px;margin-bottom:26px;background:linear-gradient(180deg,#1F2D3D,#2A3A4D);border-bottom:4px solid #B86128;padding:22px 32px;border-radius:14px;box-shadow:0 4px 18px rgba(31,45,61,.25);">
+    <div style="font-family:'Barlow Semi Condensed',sans-serif;font-size:52px;font-weight:700;color:#fff;letter-spacing:.5px;text-transform:uppercase;line-height:1;">UHA Field Trials</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:600;color:#E0986A;letter-spacing:2px;text-transform:uppercase;">Live Status Board</div>
+    <div style="margin-left:auto;font-size:20px;color:#b8c2cd;">Updated ${new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})}</div>
   </div>
   ${section('Now Running','On Course','linear-gradient(135deg,#2F6B3C,#234F2D)','#2F6B3C','#234F2D',running)}
   ${section('On Deck','Next Up','linear-gradient(135deg,#C8821E,#8A5712)','#C8821E','#8A5712',next)}
