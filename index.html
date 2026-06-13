@@ -3348,7 +3348,7 @@ function renderDisplay(){
 
   // Summary strip — written to the sticky strip element, not inline with board
   const running=[],next=[],hole=[];
-  CE.forEach(ev=>(S.heats[ev]||[]).forEach((h,hi)=>{const st=getDispStatus(ev,hi);if(st==='running')running.push(`${evLabel(ev)}: ${h.label}`);else if(st==='next')next.push(`${evLabel(ev)}: ${h.label}`);else if(st==='hole')hole.push(`${evLabel(ev)}: ${h.label}`);}));
+  CE.forEach(ev=>(S.heats[ev]||[]).forEach((h,hi)=>{const st=getDispStatus(ev,hi);const hl=h.championship?`Championship (${h.label})`:h.label;if(st==='running')running.push(`${evLabel(ev)}: ${hl}`);else if(st==='next')next.push(`${evLabel(ev)}: ${hl}`);else if(st==='hole')hole.push(`${evLabel(ev)}: ${hl}`);}));
   [['__irondog','Iron Dog'],['__beardrag','Bear Drag']].forEach(([k,lbl])=>{const st=getDispStatus(k,0);if(st==='running')running.push(lbl);else if(st==='next')next.push(lbl);else if(st==='hole')hole.push(lbl);});
   (S.pack||[]).forEach(t=>{const st=getDispStatus('__bearpack',t.num);const lbl=`Bear Pack: ${t.name||t.handler}`;if(st==='running')running.push(lbl);else if(st==='next')next.push(lbl);else if(st==='hole')hole.push(lbl);});
 
@@ -3377,7 +3377,8 @@ function renderDisplay(){
         const sd=DISP_STATUS[st]||DISP_STATUS[''];
         const dogs=heat.dogs.map(did=>{const d=gd(did);const c=getCollar(ev,hi,did);return{d,c};});
         b+=`<div style="border:1px solid ${st?sd.border:'var(--border)'};border-radius:var(--r);padding:10px 12px;margin-bottom:9px;background:${sd.bg};transition:all .2s;">`;
-        b+=`<div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:8px;"><div style="font-weight:800;font-size:14px;color:${st?sd.text:'var(--text)'};">${heat.label}</div>${_dsBadge(ev,hi)}${_dsBtns(ev,hi)}</div>`;
+        const champDispLabel=heat.championship?`Championship <span style="font-size:11px;font-weight:500;opacity:.7;">(${heat.label})</span>`:heat.label;
+        b+=`<div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:8px;"><div style="font-weight:800;font-size:14px;color:${st?sd.text:'var(--text)'};">${champDispLabel}</div>${_dsBadge(ev,hi)}${_dsBtns(ev,hi)}</div>`;
         if(dogs.length){
           b+=`<div style="display:flex;flex-wrap:wrap;gap:7px;">`;
           dogs.forEach(({d,c})=>{const isNone=c.name==='None';b+=`<div style="display:flex;align-items:center;gap:5px;background:rgba(0,0,0,.06);border-radius:7px;padding:4px 9px;">${!isNone?`<div style="width:14px;height:14px;border-radius:50%;background:${c.bg};border:1.5px solid ${c.border};flex-shrink:0;"></div>`:''}<span style="font-size:12px;font-weight:600;">${d.dog}</span><span style="font-size:10px;color:var(--text2);margin-left:2px;">${d.handler}</span></div>`;});
@@ -3452,7 +3453,8 @@ function renderDisplay(){
         b+=`<div style="flex:1;">`;
         b+=`<div style="font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px;letter-spacing:-.1px;">${evLabel(ev)}</div>`;
         b+=`<div style="border:1px solid ${st?sd.border:'var(--border)'};border-radius:var(--r);padding:10px 12px;background:${sd.bg};transition:all .2s;">`;
-        b+=`<div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:8px;"><div style="font-weight:800;font-size:14px;color:${st?sd.text:'var(--text)'};">${heat.label}</div>${_dsBadge(ev,hi)}${_dsBtns(ev,hi)}</div>`;
+        const champDispLabel2=heat.championship?`Championship <span style="font-size:11px;font-weight:500;opacity:.7;">(${heat.label})</span>`:heat.label;
+        b+=`<div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:8px;"><div style="font-weight:800;font-size:14px;color:${st?sd.text:'var(--text)'};">${champDispLabel2}</div>${_dsBadge(ev,hi)}${_dsBtns(ev,hi)}</div>`;
         if(dogs.length){
           b+=`<div style="display:flex;flex-wrap:wrap;gap:7px;">`;
           dogs.forEach(({d,c})=>{const isNone=c.name==='None';b+=`<div style="display:flex;align-items:center;gap:5px;background:rgba(0,0,0,.06);border-radius:7px;padding:4px 9px;">${!isNone?`<div style="width:14px;height:14px;border-radius:50%;background:${c.bg};border:1.5px solid ${c.border};flex-shrink:0;"></div>`:''}<span style="font-size:12px;font-weight:600;">${d.dog}</span><span style="font-size:10px;color:var(--text2);margin-left:2px;">${d.handler}</span></div>`;});
@@ -3650,9 +3652,10 @@ function buildDisplayWindow(){
       const collarTag=c.name!=='None'?`<span style="font-size:13px;font-weight:700;padding:2px 7px;border-radius:8px;background:${c.bg};color:${c.text};border:1px solid ${c.border};margin-left:2px;">${c.name}</span>`:'';
       return`<span style="display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #d1d5db;border-radius:8px;padding:6px 14px;font-size:18px;font-weight:600;color:#1a1d27;">${dot}${d.dog}${collarTag}<span style="font-weight:400;font-size:14px;color:#4b5563;">${d.handler}</span></span>`;
     }).join('');
-    if(st==='running')running.push({label:`${evLabel(ev)} — ${h.label}`,chips});
-    else if(st==='next')next.push({label:`${evLabel(ev)} — ${h.label}`,chips});
-    else if(st==='hole')hole.push({label:`${evLabel(ev)} — ${h.label}`,chips});
+    const popHeatLabel=h.championship?`Championship (${h.label})`:h.label;
+    if(st==='running')running.push({label:`${evLabel(ev)} — ${popHeatLabel}`,chips});
+    else if(st==='next')next.push({label:`${evLabel(ev)} — ${popHeatLabel}`,chips});
+    else if(st==='hole')hole.push({label:`${evLabel(ev)} — ${popHeatLabel}`,chips});
   }));
 
   // Iron Dog & Bear Drag
