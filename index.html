@@ -1852,10 +1852,17 @@ html,body{overflow-x:hidden;}
     <!-- ADD / RENEW -->
     <div class="card">
       <div class="ct">Add / Renew Membership <span class="bdg bgn">In person</span></div>
-      <p style="font-size:12px;color:var(--text2);margin-bottom:13px;">Fast entry for banquet &amp; field-trial walk-ups. If the name (or email) already exists, this records a renewal instead of a duplicate.</p>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:13px;">Fast entry for banquet &amp; field-trial walk-ups. If that name already exists, this records a renewal instead of a duplicate. Family members can share one email/phone &mdash; each person is tracked separately.</p>
       <div class="fr">
         <div class="fg"><label>Name *</label><input class="fi" id="mem-f-name" placeholder="Full name"></div>
-        <div class="fg"><label>Type</label><select class="fi" id="mem-f-type"><option value="">—</option><option>Household</option><option>Individual</option><option>Life</option><option>Youth</option><option>Other</option></select></div>
+        <div class="fg"><label>Type</label><select class="fi" id="mem-f-type" onchange="memToggleHousehold()"><option value="">—</option><option>Household</option><option>Individual</option><option>Life</option><option>Youth</option><option>Other</option></select></div>
+      </div>
+      <div class="fr" id="mem-f-household-wrap" style="display:none;">
+        <div class="fg" style="flex:1 1 100%;">
+          <label>Other household members <span style="text-transform:none;color:var(--text3);font-weight:400;">(one name per line)</span></label>
+          <textarea class="fi" id="mem-f-household" rows="3" placeholder="e.g.&#10;Jane Whaley&#10;Sam Whaley" style="resize:vertical;font-family:inherit;"></textarea>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px;">The name above is the primary contact. Everyone listed here is added as their own member under this household and can be looked up separately.</div>
+        </div>
       </div>
       <div class="fr">
         <div class="fg"><label>Email</label><input class="fi" id="mem-f-email" type="email" placeholder="email@example.com"></div>
@@ -2079,11 +2086,22 @@ function memToISO(v){
 function memFmt(iso){if(!iso)return'—';const m=iso.match(/^(\d{4})-(\d{2})-(\d{2})/);if(!m)return iso;return `${+m[2]}/${+m[3]}/${m[1]}`;}
 function memToday(){return new Date().toISOString().slice(0,10);}
 
-// Find an existing person record. Email wins; otherwise normalized name.
+// Find an existing person record. The NAME is the identity — families often
+// share one email/phone (a dad using his info for his kid), so an email match
+// alone must NOT collapse two different people onto one record. Email is only
+// used as a fallback to re-find someone when no name was supplied, or to match
+// a record that has no name of its own yet.
 function memFind(name,email){
   const e=memEmail(email),n=memNorm(name);
-  if(e){const byE=MEMBERS.people.find(p=>memEmail(p.email)&&memEmail(p.email)===e);if(byE)return byE;}
+  // 1) Name is primary. Same normalized name = same person.
   if(n){const byN=MEMBERS.people.find(p=>memNorm(p.name)===n);if(byN)return byN;}
+  // 2) Email fallback — only safe when it can't merge a shared family email onto
+  //    the wrong person: accept it only if this lookup has no name, OR the
+  //    matching record has no name of its own.
+  if(e){
+    const byE=MEMBERS.people.find(p=>memEmail(p.email)===e&&(!n||!memNorm(p.name)));
+    if(byE)return byE;
+  }
   return null;
 }
 
@@ -2171,6 +2189,7 @@ function memStatus(rec){
 // ══════════════════════════════════════════════════════════════════════════
 let memQuery='';
 let memOpenIdx=-1;
+let memEditIdx=-1;
 function refreshMembersIfOpen(){const pg=document.getElementById('page-members');if(pg&&pg.classList.contains('active'))renderMembers();}
 
 function renderMembers(){
@@ -2221,6 +2240,7 @@ function renderMembers(){
         <span style="color:var(--text3);transform:rotate(${open?'90':'0'}deg);transition:.15s;flex-shrink:0;">▸</span>
       </div>
       ${open?`<div style="padding:10px 14px 13px;background:var(--bg3);">
+        ${idx===memEditIdx?memEditFormHTML(p,idx):`
         <div style="display:flex;flex-wrap:wrap;gap:14px;font-size:12px;margin-bottom:8px;">
           <span><strong>Expires:</strong> ${memFmt(memExpires(p))}</span>
           <span><strong>Renewals:</strong> ${p.renewals.length}</span>
@@ -2228,18 +2248,76 @@ function renderMembers(){
         </div>
         <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;font-weight:700;margin-bottom:2px;">Renewal history</div>
         ${hist||'<div style="font-size:12px;color:var(--text3);">No renewals recorded.</div>'}
-        <div style="margin-top:10px;display:flex;gap:8px;">
+        <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn bs bsm" onclick="event.stopPropagation();memStartEdit(${idx})">✎ Edit details</button>
           <button class="btn bs bsm" onclick="event.stopPropagation();memQuickRenew(${idx})">↻ Record renewal (today)</button>
           <button class="btn bs bsm" onclick="event.stopPropagation();memDelete(${idx})" style="color:var(--red);">Remove</button>
-        </div>
+        </div>`}
       </div>`:''}
     </div>`;
   }).join('');
 }
-function memToggle(i){memOpenIdx=(memOpenIdx===i?-1:i);renderMembers();}
+function memToggle(i){memEditIdx=-1;memOpenIdx=(memOpenIdx===i?-1:i);renderMembers();}
 function memSearch(v){memQuery=v;renderMembers();}
 
+// ── Inline edit of a member's details ──────────────────────────────────────
+function memEditFormHTML(p,idx){
+  const opts=MEM_TYPES.map(t=>`<option ${p.type===t?'selected':''}>${t}</option>`).join('');
+  const lastIso=memLast(p)||'';
+  const esc=s=>(s||'').toString().replace(/"/g,'&quot;');
+  return `<div onclick="event.stopPropagation();">
+    <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;font-weight:700;margin-bottom:8px;">Edit member</div>
+    <div class="fr">
+      <div class="fg"><label>Name *</label><input class="fi" id="mem-e-name-${idx}" value="${esc(p.name)}"></div>
+      <div class="fg"><label>Type</label><select class="fi" id="mem-e-type-${idx}"><option value="">—</option>${opts}</select></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Email</label><input class="fi" id="mem-e-email-${idx}" type="email" value="${esc(p.email)}"></div>
+      <div class="fg"><label>Phone</label><input class="fi" id="mem-e-phone-${idx}" value="${esc(p.phone)}"></div>
+    </div>
+    <div class="fr">
+      <div class="fg"><label>Last renewed date</label><input class="fi" id="mem-e-date-${idx}" type="date" value="${lastIso}"></div>
+      <div class="fg"><label>&nbsp;</label><div style="font-size:11px;color:var(--text3);padding-top:9px;">Changing this updates their most recent renewal${lastIso?'':' (none yet — sets the first one)'}.</div></div>
+    </div>
+    <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;">
+      <button class="btn bg bsm" onclick="memSaveEdit(${idx})">Save changes</button>
+      <button class="btn bs bsm" onclick="memCancelEdit()">Cancel</button>
+    </div>
+  </div>`;
+}
+function memStartEdit(idx){memEditIdx=idx;memOpenIdx=idx;renderMembers();}
+function memCancelEdit(){memEditIdx=-1;renderMembers();}
+function memSaveEdit(idx){
+  const p=MEMBERS.people[idx];if(!p)return;
+  const g=id=>{const el=document.getElementById(id);return el?el.value:'';};
+  const name=(g(`mem-e-name-${idx}`)||'').trim();
+  if(!name){showToast('Name can\'t be empty');return;}
+  p.name=name;
+  p.type=g(`mem-e-type-${idx}`);
+  p.email=(g(`mem-e-email-${idx}`)||'').trim();
+  p.phone=(g(`mem-e-phone-${idx}`)||'').trim();
+  // Update the most recent renewal's date (or create one if none exists yet).
+  const newIso=memToISO(g(`mem-e-date-${idx}`));
+  if(newIso){
+    if(p.renewals&&p.renewals.length){
+      p.renewals[0].date=newIso;
+    }else{
+      p.renewals=[{date:newIso,source:'Manual',amount:0,household:'',event:''}];
+    }
+    p.renewals.sort((a,b)=>a.date<b.date?1:-1);
+    if(!p.firstAdded||newIso<p.firstAdded)p.firstAdded=newIso;
+  }
+  memEditIdx=-1;
+  saveMembers();renderMembers();
+  showToast('✓ Member updated');
+}
+
 // Manual add / renew from the form on the Members page
+function memToggleHousehold(){
+  const type=document.getElementById('mem-f-type').value;
+  const wrap=document.getElementById('mem-f-household-wrap');
+  if(wrap)wrap.style.display=(type==='Household')?'':'none';
+}
 function memAddRenew(){
   const name=(document.getElementById('mem-f-name').value||'').trim();
   if(!name){showToast('Enter a name');return;}
@@ -2248,12 +2326,39 @@ function memAddRenew(){
   const type=document.getElementById('mem-f-type').value;
   const dateV=document.getElementById('mem-f-date').value; // yyyy-mm-dd from date input
   const amount=document.getElementById('mem-f-amt').value;
-  const res=memUpsert({name,email,phone,type,date:dateV,amount,source:'Manual'});
+
+  // Gather any extra household members (one name per line in the textarea).
+  let extras=[];
+  if(type==='Household'){
+    const raw=(document.getElementById('mem-f-household').value||'');
+    extras=raw.split(/\n/).map(s=>s.trim()).filter(Boolean)
+      .filter(s=>memNorm(s)!==memNorm(name));            // don't duplicate the primary
+    // de-dupe the extras list against itself
+    const seen={};extras=extras.filter(s=>{const k=memNorm(s);if(seen[k])return false;seen[k]=1;return true;});
+  }
+
+  // Primary member carries the contact info + the dollar amount for the household.
+  const household=extras.length?name:'';
+  const res=memUpsert({name,email,phone,type,date:dateV,amount,source:'Manual',household});
+  // Each additional household member becomes their own lookup-able record,
+  // tied together by the household label. They share the renewal date but not
+  // the contact info or the dollar amount (one transaction per household).
+  let extraAdded=0;
+  extras.forEach(n=>{
+    const r=memUpsert({name:n,type:'Household',date:dateV,source:'Manual',household:name});
+    if(r&&r.isNew)extraAdded++;
+  });
+
   saveMembers();
-  ['mem-f-name','mem-f-email','mem-f-phone','mem-f-amt'].forEach(id=>document.getElementById(id).value='');
+  ['mem-f-name','mem-f-email','mem-f-phone','mem-f-amt','mem-f-household'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  memToggleHousehold();
   memOpenIdx=res&&res.rec?MEMBERS.people.indexOf(res.rec):-1;
   renderMembers();
-  showToast(res&&res.isNew?'✓ Member added':'✓ Renewal recorded');
+  if(extras.length){
+    showToast(`✓ Household saved — ${1+extras.length} member${extras.length?'s':''} recorded`);
+  }else{
+    showToast(res&&res.isNew?'✓ Member added':'✓ Renewal recorded');
+  }
 }
 function memQuickRenew(i){const p=MEMBERS.people[i];if(!p)return;memUpsert({name:p.name,email:p.email,phone:p.phone,type:p.type,date:memToday(),source:'Manual'});saveMembers();renderMembers();showToast('✓ Renewal recorded');}
 function memDelete(i){const p=MEMBERS.people[i];if(!p)return;if(!confirm(`Remove ${p.name} from the member registry? This deletes their renewal history.`))return;MEMBERS.people.splice(i,1);memOpenIdx=-1;saveMembers();renderMembers();showToast('Member removed');}

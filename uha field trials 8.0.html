@@ -1,7 +1,7 @@
 <html lang="en"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UHA Field Trial Manager v7.9</title>
+<title>UHA Field Trial Manager v8.0</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1F2D3D">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -97,6 +97,8 @@ body{
   padding:20px;margin-bottom:18px;box-shadow:var(--sh-sm);transition:box-shadow .18s;
 }
 .card:hover{box-shadow:var(--sh-md);}
+.mem-row:hover{box-shadow:var(--sh-sm);}
+.mem-row:hover > div:first-child{background:var(--bg3) !important;}
 .ct{
   font-family:var(--fsc);font-size:18px;font-weight:700;color:var(--navy);
   letter-spacing:.2px;margin-bottom:15px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
@@ -351,7 +353,7 @@ html,body{overflow-x:hidden;}
 <body>
 <div class="hdr">
   <img src="data:image/png;base64,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J17t9qu/bV6W0xTUMDKy2BvtDnVDeI4MLBj1znPwV2oq9NB38mY9Z1EVBUvK21x6u/n5ObtQbVa/uej7Dp9lHSRstYk5uNU0h7nOyCPq6LL1fshNUaVs0OnrJFS3djf/ABCV9aS1xwB0y4jqcnoAuhkWfpMbuzouv6uLW2lTb4vm+988kT2jtd6seg7fZb7ExlXRB0QcyQPD2ciWnp2wCB9SliIvRGO1JHyc2V5cksj7t2auusFprr3SXqqpTJXUYxTyeI4cB1/FBwe57hZV2t9HdbfNQV8Imppm8XsJIyPpHUfUspFo5nnTQx09PHBECI42hjQSTgDoOp6r0REAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAEREAREQBERAf/9k=" alt="UHA Logo" style="height:42px;width:auto;flex-shrink:0;object-fit:contain;">
-  <div class="logo"><span class="logo-name">UHA Field Trials</span><span class="logo-sub">Event Operations · v7.9</span></div>
+  <div class="logo"><span class="logo-name">UHA Field Trials</span><span class="logo-sub">Event Operations · v8.0</span></div>
   <span class="mobile-nav-label" id="mobileNavLabel">Overview</span>
   <button class="hamburger" id="hamburgerBtn" onclick="toggleMobileNav()" title="Menu">☰</button>
   <nav class="navw" id="mainNav">
@@ -364,6 +366,7 @@ html,body{overflow-x:hidden;}
     <button class="nb" onclick="nav('scores',this)">Scoreboard</button>
     <button class="nb" onclick="nav('display',this)">📺 Display</button>
     <button class="nb" onclick="nav('signup',this)">📋 Sign Up</button>
+    <button class="nb" onclick="nav('members',this)">👥 Members</button>
     <button class="nb" onclick="nav('about',this)">ℹ About</button>
   </nav>
   <button id="undoBtn" onclick="undo()" title="Undo">↩<span class="undo-lbl"> Undo</span></button>
@@ -1843,6 +1846,57 @@ html,body{overflow-x:hidden;}
   </div>
 </div>
 <!-- About Page -->
+<div id="page-members" class="pg">
+  <div class="sg" id="mem-stats" style="margin-bottom:18px;"></div>
+  <div class="g2">
+    <!-- ADD / RENEW -->
+    <div class="card">
+      <div class="ct">Add / Renew Membership <span class="bdg bgn">In person</span></div>
+      <p style="font-size:12px;color:var(--text2);margin-bottom:13px;">Fast entry for banquet &amp; field-trial walk-ups. If the name (or email) already exists, this records a renewal instead of a duplicate.</p>
+      <div class="fr">
+        <div class="fg"><label>Name *</label><input class="fi" id="mem-f-name" placeholder="Full name"></div>
+        <div class="fg"><label>Type</label><select class="fi" id="mem-f-type"><option value="">—</option><option>Household</option><option>Individual</option><option>Life</option><option>Youth</option><option>Other</option></select></div>
+      </div>
+      <div class="fr">
+        <div class="fg"><label>Email</label><input class="fi" id="mem-f-email" type="email" placeholder="email@example.com"></div>
+        <div class="fg"><label>Phone</label><input class="fi" id="mem-f-phone" placeholder="Phone"></div>
+      </div>
+      <div class="fr">
+        <div class="fg"><label>Renewed / Joined Date</label><input class="fi" id="mem-f-date" type="date"></div>
+        <div class="fg"><label>Amount ($)</label><input class="fi" id="mem-f-amt" type="number" placeholder="35" min="0"></div>
+      </div>
+      <button class="btn bg" onclick="memAddRenew()" style="margin-top:4px;">＋ Save Membership</button>
+
+      <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border);">
+        <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;font-weight:700;margin-bottom:7px;">Bring in your existing roster</div>
+        <p style="font-size:12px;color:var(--text2);margin-bottom:9px;">Import your current Excel/CSV member sheet once to seed everyone's last-renewed date. Looks for columns named Name, Email, Phone, Type, and a renewal/date column.</p>
+        <input type="file" id="mem-roster-file" accept=".csv,.txt,.xlsx,.xls" style="display:none;" onchange="memImportRoster(event)">
+        <button class="btn bs bsm" onclick="document.getElementById('mem-roster-file').click()">⬆ Import Roster (CSV / Excel)</button>
+      </div>
+
+      <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);">
+        <div style="font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;font-weight:700;margin-bottom:7px;">Renewal term</div>
+        <div class="fr" style="margin-bottom:4px;">
+          <div class="fg"><label>How memberships expire</label>
+            <select class="fi" id="mem-term-mode" onchange="memSetTerm()">
+              <option value="rolling">Rolling — 12 months from renewal</option>
+              <option value="calendar">Calendar year — expires 12/31</option>
+            </select>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);">Currently: <span id="mem-term-label">—</span></div>
+      </div>
+    </div>
+
+    <!-- LOOKUP -->
+    <div class="card">
+      <div class="ct">Member Lookup</div>
+      <input class="fi" id="mem-search" placeholder="🔍 Search by name, email, phone, or type…" oninput="memSearch(this.value)" style="margin-bottom:13px;">
+      <div id="mem-list"></div>
+    </div>
+  </div>
+</div>
+
 <div id="page-about" class="pg">
   <div class="card" style="max-width:600px;margin:0 auto;text-align:center;padding:36px 30px;">
     <div style="font-size:48px;margin-bottom:14px;">🐾</div>
@@ -1851,7 +1905,7 @@ html,body{overflow-x:hidden;}
     <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:20px;">
       <div style="font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--text3);margin-bottom:8px;">Designed &amp; Developed by</div>
       <div style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:4px;">April Thatcher</div>
-      <div style="font-size:12px;color:var(--text2);">Version 7.9 &nbsp;·&nbsp; 2026</div>
+      <div style="font-size:12px;color:var(--text2);">Version 8.0 &nbsp;·&nbsp; 2026</div>
     </div>
     <div style="font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:20px;">
       This application was designed and developed by April Thatcher<br>
@@ -1863,7 +1917,7 @@ html,body{overflow-x:hidden;}
 </div>
 <!-- Footer Credit -->
 <div style="text-align:center;padding:18px;font-size:11px;color:var(--text3);border-top:1px solid var(--border);margin-top:10px;">
-  Designed &amp; developed by <strong style="color:var(--text2);">April Thatcher</strong> &nbsp;·&nbsp; Donated to the Utah Houndsmen Association &nbsp;·&nbsp; v7.9 © 2026
+  Designed &amp; developed by <strong style="color:var(--text2);">April Thatcher</strong> &nbsp;·&nbsp; Donated to the Utah Houndsmen Association &nbsp;·&nbsp; v8.0 © 2026
 </div>
 <script>
 const CE=['Puppy','Junior','Senior','Over the Hill','Youth'];
@@ -1987,6 +2041,273 @@ function buildMembershipNames(purchaser,listed){
   if(p&&!names.some(x=>x.toLowerCase()===p.toLowerCase()))names.push(p);
   return names;
 }
+// ══════════════════════════════════════════════════════════════════════════
+// MEMBER REGISTRY  ── persistent membership roster, separate from event state.
+// Stored under its own localStorage key ('uha_members') so resetting or
+// starting a new event NEVER wipes the membership history. Every membership
+// purchase (Day-of or iPad import) feeds a renewal into this registry; the
+// registry is what powers lookup ("when did they last renew?") and the
+// Member Registry export sheet.
+// ══════════════════════════════════════════════════════════════════════════
+const MEM_KEY='uha_members';
+const MEM_TYPES=['Household','Individual','Life','Youth','Other'];
+let MEMBERS=loadMembers();
+
+function memDefault(){return{meta:{termMode:'rolling',graceDays:0,yearEndMonth:12,yearEndDay:31},people:[]};}
+function loadMembers(){
+  try{const r=localStorage.getItem(MEM_KEY);if(r){const o=JSON.parse(r);if(!o.meta)o.meta=memDefault().meta;if(!Array.isArray(o.people))o.people=[];return o;}}catch(e){}
+  return memDefault();
+}
+function saveMembers(){try{localStorage.setItem(MEM_KEY,JSON.stringify(MEMBERS));}catch(e){showToast('Warning: member storage full');}}
+
+// ── helpers ───────────────────────────────────────────────────────────────
+function memNorm(s){return (s||'').toString().trim().toLowerCase().replace(/\s+/g,' ');}
+function memEmail(s){return (s||'').toString().trim().toLowerCase();}
+// Parse a date from locale ('6/14/2026'), ISO ('2026-06-14'), or anything
+// Date can read. Returns an ISO 'YYYY-MM-DD' string, or '' if unparseable.
+function memToISO(v){
+  if(!v)return'';
+  if(v instanceof Date&&!isNaN(v))return v.toISOString().slice(0,10);
+  const s=String(v).trim();
+  let m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/);                 // ISO
+  if(m)return `${m[1]}-${String(+m[2]).padStart(2,'0')}-${String(+m[3]).padStart(2,'0')}`;
+  m=s.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);          // US m/d/y
+  if(m){let y=+m[3];if(y<100)y+=2000;return `${y}-${String(+m[1]).padStart(2,'0')}-${String(+m[2]).padStart(2,'0')}`;}
+  const d=new Date(s);if(!isNaN(d))return d.toISOString().slice(0,10);
+  return'';
+}
+function memFmt(iso){if(!iso)return'—';const m=iso.match(/^(\d{4})-(\d{2})-(\d{2})/);if(!m)return iso;return `${+m[2]}/${+m[3]}/${m[1]}`;}
+function memToday(){return new Date().toISOString().slice(0,10);}
+
+// Find an existing person record. Email wins; otherwise normalized name.
+function memFind(name,email){
+  const e=memEmail(email),n=memNorm(name);
+  if(e){const byE=MEMBERS.people.find(p=>memEmail(p.email)&&memEmail(p.email)===e);if(byE)return byE;}
+  if(n){const byN=MEMBERS.people.find(p=>memNorm(p.name)===n);if(byN)return byN;}
+  return null;
+}
+
+// Upsert a single person + one renewal. Returns {rec,isNew,isRenewal}.
+function memUpsert(o){
+  o=o||{};
+  const name=(o.name||'').trim();if(!name)return null;
+  const iso=memToISO(o.date)||memToday();
+  let rec=memFind(name,o.email);
+  let isNew=false;
+  if(!rec){
+    rec={name,email:(o.email||'').trim(),phone:(o.phone||'').trim(),type:o.type||'',notes:o.notes||'',firstAdded:iso,renewals:[]};
+    MEMBERS.people.push(rec);isNew=true;
+  }else{
+    // enrich missing contact info / fix casing on the canonical name
+    if(!rec.email&&o.email)rec.email=(o.email||'').trim();
+    if(!rec.phone&&o.phone)rec.phone=(o.phone||'').trim();
+    if(o.type)rec.type=o.type;
+    if(name.length>rec.name.length)rec.name=name; // prefer the fuller spelling
+  }
+  // de-dupe identical renewal (same date + source) so re-imports don't stack
+  const dup=rec.renewals.some(r=>r.date===iso&&(r.source||'')===(o.source||'')&&(r.household||'')===(o.household||''));
+  if(!dup){
+    rec.renewals.push({date:iso,source:o.source||'',amount:(+o.amount||0),household:o.household||'',event:o.event||''});
+    rec.renewals.sort((a,b)=>a.date<b.date?1:-1); // newest first
+  }
+  return {rec,isNew,isRenewal:!dup};
+}
+
+// Expand a household membership object (the per-event transaction shape:
+// {date,purchaser,phone,email,names:[],source}) into per-person renewals.
+// The purchaser carries the phone/email; other covered names share the
+// household label but are tracked as their own lookup-able records.
+function registryFromMembership(m,eventName){
+  if(!m)return;
+  const names=Array.isArray(m.names)?m.names:(m.name?[m.name]:[]);
+  const purchaser=(m.purchaser||'').trim();
+  const pNorm=memNorm(purchaser);
+  names.forEach(n=>{
+    const isPurchaser=memNorm(n)===pNorm;
+    memUpsert({
+      name:n,
+      email:isPurchaser?m.email:'',
+      phone:isPurchaser?m.phone:'',
+      type:names.length>1?'Household':'Individual',
+      date:m.date,
+      source:m.source||'',
+      household:names.length>1?(purchaser||n):'',
+      event:eventName||''
+    });
+  });
+  saveMembers();
+  refreshMembersIfOpen();
+}
+
+// ── derived status ─────────────────────────────────────────────────────────
+function memLast(rec){return (rec.renewals&&rec.renewals.length)?rec.renewals[0].date:'';}
+function memExpires(rec){
+  const last=memLast(rec);if(!last)return'';
+  const mt=MEMBERS.meta||{};
+  const [y,mo,d]=last.split('-').map(Number);
+  let exp;
+  if(mt.termMode==='calendar'){
+    const em=mt.yearEndMonth||12,ed=mt.yearEndDay||31;
+    exp=new Date(y,em-1,ed);
+    if(exp<new Date(y,mo-1,d))exp=new Date(y+1,em-1,ed); // roll to next cycle
+  }else{
+    exp=new Date(y+1,mo-1,d); // rolling 12 months
+  }
+  if(mt.graceDays)exp.setDate(exp.getDate()+mt.graceDays);
+  return exp.toISOString().slice(0,10);
+}
+function memStatus(rec){
+  const exp=memExpires(rec);
+  if(!exp)return{key:'none',label:'No record',color:'var(--text3)'};
+  const today=new Date(memToday()),e=new Date(exp);
+  const days=Math.round((e-today)/86400000);
+  if(days<0)return{key:'expired',label:'Expired',color:'var(--red)'};
+  if(days<=45)return{key:'soon',label:'Expiring soon',color:'var(--amber)'};
+  return{key:'active',label:'Active',color:'var(--green)'};
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// MEMBER UI
+// ══════════════════════════════════════════════════════════════════════════
+let memQuery='';
+let memOpenIdx=-1;
+function refreshMembersIfOpen(){const pg=document.getElementById('page-members');if(pg&&pg.classList.contains('active'))renderMembers();}
+
+function renderMembers(){
+  const people=MEMBERS.people||[];
+  // stats
+  let active=0,soon=0,expired=0;
+  people.forEach(p=>{const s=memStatus(p).key;if(s==='active')active++;else if(s==='soon')soon++;else if(s==='expired')expired++;});
+  const st=document.getElementById('mem-stats');
+  if(st)st.innerHTML=
+    `<div class="sc sc-navy"><div class="sl">Total Members</div><div class="sv">${people.length}</div><div class="ss">in registry</div></div>`+
+    `<div class="sc sc-green"><div class="sl">Active</div><div class="sv">${active}</div><div class="ss">current</div></div>`+
+    `<div class="sc sc-amber"><div class="sl">Expiring Soon</div><div class="sv">${soon}</div><div class="ss">within 45 days</div></div>`+
+    `<div class="sc"><div class="sl">Expired</div><div class="sv">${expired}</div><div class="ss">need renewal</div></div>`;
+  // term-mode label
+  const tl=document.getElementById('mem-term-label');
+  if(tl){const mt=MEMBERS.meta||{};tl.textContent=mt.termMode==='calendar'?`Calendar year (ends ${mt.yearEndMonth||12}/${mt.yearEndDay||31})`:'Rolling 12 months from renewal';}
+  const tm=document.getElementById('mem-term-mode');if(tm)tm.value=(MEMBERS.meta&&MEMBERS.meta.termMode)||'rolling';
+  const df=document.getElementById('mem-f-date');if(df&&!df.value)df.value=memToday();
+  // list
+  const q=memNorm(memQuery);
+  let list=people.slice();
+  if(q)list=list.filter(p=>memNorm(p.name).includes(q)||memEmail(p.email).includes(q)||memNorm(p.phone).includes(q)||memNorm(p.type).includes(q));
+  list.sort((a,b)=>{const la=memLast(a),lb=memLast(b);if(la!==lb)return la<lb?1:-1;return memNorm(a.name)<memNorm(b.name)?-1:1;});
+  const wrap=document.getElementById('mem-list');
+  if(!wrap)return;
+  if(!people.length){wrap.innerHTML=`<div style="text-align:center;padding:34px 14px;color:var(--text3);"><div style="font-size:30px;margin-bottom:8px;">👥</div><div style="font-weight:700;color:var(--text2);">No members yet</div><div style="font-size:13px;margin-top:5px;">Import your existing roster, add one manually, or pull in field-trial sign-ups — they'll all collect here.</div></div>`;return;}
+  if(!list.length){wrap.innerHTML=`<div style="text-align:center;padding:26px;color:var(--text3);">No members match "<strong>${memQuery}</strong>".</div>`;return;}
+  wrap.innerHTML=list.map(p=>{
+    const idx=people.indexOf(p);
+    const s=memStatus(p);
+    const open=idx===memOpenIdx;
+    const hist=p.renewals.map(r=>`<div style="display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-top:1px dashed var(--border);font-size:12px;">
+        <span style="color:var(--text);font-weight:600;">${memFmt(r.date)}</span>
+        <span style="color:var(--text2);">${r.source||'—'}${r.household?` · household: ${r.household}`:''}${r.event?` · ${r.event}`:''}</span>
+        <span style="color:var(--text2);">${r.amount?'$'+r.amount:''}</span>
+      </div>`).join('');
+    return `<div class="mem-row" style="border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px;overflow:hidden;">
+      <div onclick="memToggle(${idx})" style="display:flex;align-items:center;gap:12px;padding:11px 14px;cursor:pointer;background:var(--bg2);">
+        <div style="flex:1;min-width:0;">
+          <div style="font-family:var(--fsc);font-size:17px;font-weight:700;color:var(--navy);">${p.name}</div>
+          <div style="font-size:12px;color:var(--text2);">${[p.type,p.email,p.phone].filter(Boolean).join(' · ')||'—'}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.3px;">Last renewed</div>
+          <div style="font-size:14px;font-weight:700;color:var(--text);">${memFmt(memLast(p))}</div>
+        </div>
+        <span class="bdg" style="background:${s.color};color:#fff;flex-shrink:0;">${s.label}</span>
+        <span style="color:var(--text3);transform:rotate(${open?'90':'0'}deg);transition:.15s;flex-shrink:0;">▸</span>
+      </div>
+      ${open?`<div style="padding:10px 14px 13px;background:var(--bg3);">
+        <div style="display:flex;flex-wrap:wrap;gap:14px;font-size:12px;margin-bottom:8px;">
+          <span><strong>Expires:</strong> ${memFmt(memExpires(p))}</span>
+          <span><strong>Renewals:</strong> ${p.renewals.length}</span>
+          <span><strong>First added:</strong> ${memFmt(p.firstAdded)}</span>
+        </div>
+        <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.4px;font-weight:700;margin-bottom:2px;">Renewal history</div>
+        ${hist||'<div style="font-size:12px;color:var(--text3);">No renewals recorded.</div>'}
+        <div style="margin-top:10px;display:flex;gap:8px;">
+          <button class="btn bs bsm" onclick="event.stopPropagation();memQuickRenew(${idx})">↻ Record renewal (today)</button>
+          <button class="btn bs bsm" onclick="event.stopPropagation();memDelete(${idx})" style="color:var(--red);">Remove</button>
+        </div>
+      </div>`:''}
+    </div>`;
+  }).join('');
+}
+function memToggle(i){memOpenIdx=(memOpenIdx===i?-1:i);renderMembers();}
+function memSearch(v){memQuery=v;renderMembers();}
+
+// Manual add / renew from the form on the Members page
+function memAddRenew(){
+  const name=(document.getElementById('mem-f-name').value||'').trim();
+  if(!name){showToast('Enter a name');return;}
+  const email=document.getElementById('mem-f-email').value;
+  const phone=document.getElementById('mem-f-phone').value;
+  const type=document.getElementById('mem-f-type').value;
+  const dateV=document.getElementById('mem-f-date').value; // yyyy-mm-dd from date input
+  const amount=document.getElementById('mem-f-amt').value;
+  const res=memUpsert({name,email,phone,type,date:dateV,amount,source:'Manual'});
+  saveMembers();
+  ['mem-f-name','mem-f-email','mem-f-phone','mem-f-amt'].forEach(id=>document.getElementById(id).value='');
+  memOpenIdx=res&&res.rec?MEMBERS.people.indexOf(res.rec):-1;
+  renderMembers();
+  showToast(res&&res.isNew?'✓ Member added':'✓ Renewal recorded');
+}
+function memQuickRenew(i){const p=MEMBERS.people[i];if(!p)return;memUpsert({name:p.name,email:p.email,phone:p.phone,type:p.type,date:memToday(),source:'Manual'});saveMembers();renderMembers();showToast('✓ Renewal recorded');}
+function memDelete(i){const p=MEMBERS.people[i];if(!p)return;if(!confirm(`Remove ${p.name} from the member registry? This deletes their renewal history.`))return;MEMBERS.people.splice(i,1);memOpenIdx=-1;saveMembers();renderMembers();showToast('Member removed');}
+
+// Term-mode settings
+function memSetTerm(){
+  const mode=document.getElementById('mem-term-mode').value;
+  MEMBERS.meta.termMode=mode;
+  saveMembers();renderMembers();
+  showToast('Renewal term updated');
+}
+
+// ── Import existing roster (CSV or XLSX) ───────────────────────────────────
+function memImportRoster(e){
+  const f=e.target.files[0];if(!f)return;e.target.value='';
+  const isXlsx=/\.xls[xm]?$/i.test(f.name);
+  const finish=rows=>{
+    if(!rows||rows.length<2){showToast('No data rows found in file');return;}
+    const headers=rows[0].map(h=>memNorm(h));
+    const col=(...names)=>{for(const n of names){const i=headers.findIndex(h=>h.includes(n));if(i>=0)return i;}return -1;};
+    const iName=col('name','member','purchaser');
+    const iEmail=col('email','e-mail');
+    const iPhone=col('phone','cell','contact');
+    const iType=col('type','level','membership');
+    const iDate=col('renew','last renewed','date','expires','paid','year');
+    if(iName<0){showToast('Could not find a Name column in that file');return;}
+    let added=0,renew=0;
+    for(let i=1;i<rows.length;i++){
+      const c=rows[i];const nm=(c[iName]||'').toString().trim();if(!nm)continue;
+      const res=memUpsert({name:nm,email:iEmail>=0?c[iEmail]:'',phone:iPhone>=0?c[iPhone]:'',type:iType>=0?c[iType]:'',date:iDate>=0?c[iDate]:'',source:'Import'});
+      if(res){if(res.isNew)added++;else if(res.isRenewal)renew++;}
+    }
+    saveMembers();renderMembers();
+    showToast(`✓ Imported — ${added} new, ${renew} renewal${renew!==1?'s':''} added`);
+  };
+  const reader=new FileReader();
+  if(isXlsx){
+    const run=()=>{reader.onload=ev=>{try{const wb=window.XLSX.read(new Uint8Array(ev.target.result),{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];finish(window.XLSX.utils.sheet_to_json(ws,{header:1,raw:false}));}catch(err){showToast('Could not read that Excel file');}};reader.readAsArrayBuffer(f);};
+    if(window.XLSX)run();else{const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';s.onload=run;s.onerror=()=>showToast('Could not load Excel library — check internet');document.head.appendChild(s);}
+  }else{
+    reader.onload=ev=>{try{finish(parseCSVFile(ev.target.result).filter(r=>r.some(x=>(x||'').trim())));}catch(err){showToast('Could not read that CSV');}};
+    reader.readAsText(f);
+  }
+}
+
+// Build the Member Registry export sheet (called from exportXLSX)
+function memBuildRegistrySheet(){
+  const rows=[['Name','Type','Email','Phone','Last Renewed','Expires','Status','# Renewals','First Added','Notes']];
+  (MEMBERS.people||[]).slice().sort((a,b)=>memNorm(a.name)<memNorm(b.name)?-1:1).forEach(p=>{
+    rows.push([p.name,p.type||'',p.email||'',p.phone||'',memFmt(memLast(p)),memFmt(memExpires(p)),memStatus(p).label,p.renewals.length,memFmt(p.firstAdded),p.notes||'']);
+  });
+  return rows;
+}
+
 // ── UNDO ─────────────────────────────────────
 const UNDO_LIMIT=30;
 let undoStack=[];
@@ -2168,7 +2489,7 @@ function upPackDog(num,dogIdx,field,val){
 function toggleMobileNav(){const n=document.getElementById('mainNav');const b=document.getElementById('hamburgerBtn');n.classList.toggle('open');b.textContent=n.classList.contains('open')?'✕':'☰';}
 function closeMobileNav(){const n=document.getElementById('mainNav');const b=document.getElementById('hamburgerBtn');if(n){n.classList.remove('open');}if(b){b.textContent='☰';}}
 document.addEventListener('click',function(e){const nav=document.getElementById('mainNav');const btn=document.getElementById('hamburgerBtn');if(nav&&btn&&!nav.contains(e.target)&&!btn.contains(e.target)){closeMobileNav();}});
-function nav(p,btn){document.querySelectorAll('.pg').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nb').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');if(btn){btn.classList.add('active');const lbl=document.getElementById('mobileNavLabel');if(lbl)lbl.textContent=btn.textContent.replace(/^[📺📋ℹ]\s*/,'');}closeMobileNav();const renders={overview:renderOV,roster:renderRoster,brackets:renderBrackets,treeing:renderTreeing,special:renderSpecial,scores:renderScores,display:renderDisplay_nav,signup:renderSignup_nav,bearpack:renderBearPack,about:function(){}};if(renders[p])renders[p]();}
+function nav(p,btn){document.querySelectorAll('.pg').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.nb').forEach(x=>x.classList.remove('active'));document.getElementById('page-'+p).classList.add('active');if(btn){btn.classList.add('active');const lbl=document.getElementById('mobileNavLabel');if(lbl)lbl.textContent=btn.textContent.replace(/^[📺📋ℹ]\s*/,'');}closeMobileNav();const renders={overview:renderOV,roster:renderRoster,brackets:renderBrackets,treeing:renderTreeing,special:renderSpecial,scores:renderScores,display:renderDisplay_nav,signup:renderSignup_nav,bearpack:renderBearPack,members:renderMembers,about:function(){}};if(renders[p])renders[p]();}
 function goTo(p){const btns=[...document.querySelectorAll('.navw .nb')];const map={overview:'Overview',roster:'Roster',brackets:'Heat Brackets',treeing:'Treeing',special:'Iron Dog',bearpack:'Bear Pack',scores:'Scoreboard',display:'Display',signup:'Sign Up',about:'About'};const want=map[p]||'';const btn=btns.find(b=>b.textContent.replace(/^[^A-Za-z]+/,'').startsWith(want));nav(p,btn||null);window.scrollTo({top:0,behavior:'smooth'});}
 function renderOV(){
   const act=S.dogs.filter(d=>d.dog&&d.handler);
@@ -3010,6 +3331,13 @@ function exportXLSX(){
       });
       const ws=makeSheet(rows);autoWidth(ws,rows);
       XLSX.utils.book_append_sheet(wb,ws,'Memberships Sold');
+    }
+
+    // ── 9b. Member Registry (persistent roster across all events) ──────────
+    {
+      const rows=memBuildRegistrySheet();
+      const ws=makeSheet(rows);autoWidth(ws,rows);
+      XLSX.utils.book_append_sheet(wb,ws,'Member Registry');
     }
 
     // ── 10. Raffle Tickets Sold ────────────────────────────────────────────
@@ -4187,7 +4515,9 @@ function submitSignup(){
     const names=buildMembershipNames(contactName,collectMembers());
     if(names.length){
       if(!S.memberships)S.memberships=[];
-      S.memberships.push({date:dateStr,purchaser:contactName||'Staff',phone:ph||'',email:email||'',names,source:'Day-of',submissionId:null});
+      const _memRec={date:dateStr,purchaser:contactName||'Staff',phone:ph||'',email:email||'',names,source:'Day-of',submissionId:null};
+      S.memberships.push(_memRec);
+      registryFromMembership(_memRec,'Field Trial');
       msgs.push(`✓ Membership (${names.length} name${names.length>1?'s':''})`);
     }
   }
@@ -5072,11 +5402,13 @@ function importSheetEntries(){
     const names=buildMembershipNames(m.purchaser,m.names);
     if(!names.length)return;
     if(!S.memberships)S.memberships=[];
-    S.memberships.push({
+    const _impMem={
       date:m.timestamp?new Date(m.timestamp).toLocaleDateString():new Date().toLocaleDateString(),
       purchaser:m.purchaser||'iPad',phone:m.phone||'',email:m.email||'',
       names,source:'iPad',submissionId:m.submissionId||null
-    });
+    };
+    S.memberships.push(_impMem);
+    registryFromMembership(_impMem,'Field Trial');
     if(m.submissionId){S.importedMemberSubs.push(String(m.submissionId));importedMemSet.add(String(m.submissionId));}
     addedMems++;
   });
